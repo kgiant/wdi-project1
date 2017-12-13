@@ -1,0 +1,116 @@
+$(()=>{
+
+  const $balance = $('#balance');
+  const $images = $('.image');
+  const $msgScreen = $('.msgScreen');
+  const $select = $('select.wager');
+  const $selectWM = $('select.winMult');
+  const $button = $('.bet');
+  let pickArray = [];
+  const $form = $('form');
+  let credit = 1000;
+  let wager = 5;  //initial value
+  let winMult = 2; //initial value
+  let totalBet = 0;
+  let totatWin = 0;
+  let totalLoss = 0;
+  let spinIndex = 0;
+  let cardPicked = '';
+  let msg = 'Hi there, ready to play?';
+  let clickCount = 0;
+  let gameRunning = false;
+
+  // set of images
+  const cardArray = [
+    'img1.png',
+    'img2.png',
+    'img3.png',
+    'img4.png',
+    'img5.png',
+    'img6.png',
+    'img7.png'
+  ];
+  // this is the value of each card, say Aces give you a bigger win multiple than 3s
+  // const cardValue = {
+  //   card1: 1,
+  //   card2: 2,
+  //   card3: 3,
+  //   card4: 5,
+  //   card5: 8,
+  //   card6: 15
+  // };
+
+  $balance.html(credit);
+  // get wager amount
+
+  $select.on('change', (e) => {
+    wager = parseInt($(e.target).val());
+  });
+
+  // get wager multiple
+  $selectWM.on('change', (e) => {
+    winMult = parseInt($(e.target).val());
+  });
+
+  // bet and play
+  $form.on('submit', () => {
+    $images.css('background-image', 'images/img9.png');
+    event.preventDefault();
+    totalBet = wager * winMult;
+    console.log(wager, winMult, totalBet, totalBet < credit);
+    if (totalBet > credit){
+      msg = 'You have insufficient credit for this bet. Please change your selection or add additional credits';
+      $msgScreen.html(msg);
+      return; // exit
+    } else {
+      gameRunning = true;
+      //assigning standard image to all image divs
+      // $images an array. and for each $image, assign the background image filename that is at that position in the cards array
+      $images.css('background-image', 'images/img9.png');    // add a standard image
+      // $image.css('background-image', `images/${cardArray[i]}`);)    // add a standard image
+      pickArray = [];
+    }
+  });
+
+  $images.on('click', (e) => {
+    console.log('clicked image');
+    if (gameRunning === true){
+      clickCount +=1;
+      spinIndex = Math.floor(Math.random()*(cardArray.length));
+      // fade away clicked grey image
+      //add image to pickArray
+      pickArray.push(spinIndex);
+      console.log($(e.target));
+      cardPicked = cardArray[spinIndex];
+      const $clickedImage = $(e.target);
+      $clickedImage.attr('src', `images/${cardPicked}`);
+      // $image.css('background-image', `images/${cardPicked}`);
+
+      if (clickCount === 3){
+        gameRunning = false;
+        checkSelect();
+        //
+      }
+    }
+  });
+
+  function checkSelect(){
+    if (pickArray[0] === pickArray[1] === pickArray [2]){
+      totalWin = totalBet;    //* cardValue(...need to identify);
+      msg = `Congratulations! You have won ${totalWin}`; // check {}format
+      $msgScreen.html(msg);
+      credit = credit + totalWin;
+      $balance.html(credit);
+      clickCount = 0;
+    } else {
+      const totalLoss = totalBet;
+      msg = 'Sorry! Maybe next time';
+      $msgScreen.html(msg);
+      credit = credit - totalLoss;
+      $balance.html(credit);
+      clickCount = 0;
+    }
+  }
+
+
+});
