@@ -56,12 +56,13 @@ nav ul {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  max-height: 80%;
 }
 
 /*MAIN*/
 
 main {
-  width: 935px;
+  width: 400px;
   padding: 60px 20px 0;
 }
 
@@ -83,12 +84,6 @@ h1 {
   justify-content: space-between;
 }
 
-.grid-wrapper.img1 {
-}
-
-.grid-wrapper.img2 {
-}
-
 .grid-wrapper ul li {
   margin-bottom: 30px;
   width: calc(33.33% - 20px);
@@ -104,12 +99,15 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   font-size: 25px;
-  border: 5px;
+  border: 1px solid grey;
 }
 
 .dashboard {
   display: flex;
   flex-wrap: wrap;
+  flex-basis: 100%;
+  max-width: 935px;
+
 }
 
 
@@ -158,7 +156,7 @@ footer ul li a {
   transform: translate(-50%, -50%);
 }
 
-.grid-wrapper ul li:nth-child(1):after {
+/* .grid-wrapper ul li:nth-child(1):after {
   content: "1";
 }
 
@@ -192,7 +190,7 @@ footer ul li a {
 
 .grid-wrapper ul li:nth-child(9):after {
   content: "9";
-}
+} */
 
 /*these styles will only apply if the browser width is ;ess than 735px */
 @media only screen and (max-width: 735px) {

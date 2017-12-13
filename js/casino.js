@@ -23,11 +23,11 @@ $(()=>{
   // set of images
   const cardArray = [
     'img1.png',
-    'img2.png',
-    'img3.png',
-    'img4.png',
-    'img5.png',
-    'img6.png',
+    // 'img2.png',
+    // 'img3.png',
+    // 'img4.png',
+    // 'img5.png',
+    // 'img6.png',
     'img7.png'
   ];
   // this is the value of each card, say Aces give you a bigger win multiple than 3s
@@ -54,7 +54,8 @@ $(()=>{
 
   // bet and play
   $form.on('submit', () => {
-    $images.css('background-image', 'images/img9.png');
+    $images.attr('src', 'images/img9.png');
+    $msgScreen.html('Lets play!');
     event.preventDefault();
     totalBet = wager * winMult;
     console.log(wager, winMult, totalBet, totalBet < credit);
@@ -64,10 +65,7 @@ $(()=>{
       return; // exit
     } else {
       gameRunning = true;
-      //assigning standard image to all image divs
-      // $images an array. and for each $image, assign the background image filename that is at that position in the cards array
-      $images.css('background-image', 'images/img9.png');    // add a standard image
-      // $image.css('background-image', `images/${cardArray[i]}`);)    // add a standard image
+      $images.css('background-image', 'images/img9.png');    // add a standard image over all boxes
       pickArray = [];
     }
   });
@@ -95,7 +93,7 @@ $(()=>{
   });
 
   function checkSelect(){
-    if (pickArray[0] === pickArray[1] === pickArray [2]){
+    if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
       totalWin = totalBet;    //* cardValue(...need to identify);
       msg = `Congratulations! You have won ${totalWin}`; // check {}format
       $msgScreen.html(msg);
