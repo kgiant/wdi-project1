@@ -270,24 +270,35 @@ footer ul li a {
   }
 }
 
-/*  Div position = absolute, margin 100px auto 0 auto; z-index = 1000
-goawayname display = none
+/* DOUBLE OR NOTHING DIV */
 .doubleOrnothing {
 position: absolute;
 margin: 100px auto 0 auto;
-border
-width
-height
-
+border: 2px solid grey;
+background-color: white;
+font: red;
+width: 150px;
+height: 150px;
 }
+
+.goaway {
+display: none;
+}
+
+.submit {
+  border: 2px solid grey;
+  
+}
+
+/*  Div position = absolute, margin 100px auto 0 auto; z-index = 1000
+goawayname display = none
+
 .doubleOrnothing button {
 border
 background color
 color
 
 }
-.goaway {
-display: none;
-}
+
 pointer-events
 */

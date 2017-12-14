@@ -12,7 +12,7 @@ $(()=>{
   let wager = 5;  //initial value
   let winMult = 2; //initial value
   let totalBet = 0;
-  // let totatWin = 0;
+  let totatWin = 0;
   // let totalLoss = 0;
   let spinIndex = 0;
   let cardPicked = '';
@@ -20,6 +20,7 @@ $(()=>{
   let clickCount = 0;
   let gameRunning = false;
   // let message = '';
+  let dOnStatus = false;
 
   // set of images - increase the number of array values to increase difficulty
   const cardArray = [
@@ -32,14 +33,14 @@ $(()=>{
     'img7.png'
   ];
   // this is the value of each card, say Aces give you a bigger win multiple than 3s
-  // const cardValue = {
-  //   card1: 1,
-  //   card2: 2,
-  //   card3: 3,
-  //   card4: 5,
-  //   card5: 8,
-  //   card6: 15
-  // };
+  const cardValue = [
+    // 1,
+    // 2,
+    // 3,
+    5,
+    // 8,
+    15
+  ];
 
   $balance.html(credit);
   $msgScreen.html('Hi there, ready to play?');
@@ -83,6 +84,7 @@ $(()=>{
       pickArray.push(spinIndex);
       // console.log($(e.target));
       cardPicked = cardArray[spinIndex];
+      console.log(cardValue[spinIndex]);
       const $clickedImage = $(e.target);
       $clickedImage.attr('src', `images/${cardPicked}`);
       // $image.css('background-image', `images/${cardPicked}`);
@@ -95,10 +97,10 @@ $(()=>{
 
   function checkSelect(){
     if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
-      // totalWin = totalBet;    //* cardValue(...need to identify);
+      totalWin = totalBet * cardValue[spinIndex];    //* cardValue(...need to identify);
       // msg = `Congratulations! You have won ${totalWin}`; // check {}format
-      $msgScreen.html(`Congratulations! You have won ${totalBet}GBP`);
-      credit = credit + totalBet;
+      $msgScreen.html(`Congratulations! You have won ${totalWin}GBP`);
+      credit = credit + totalWin;
       $balance.html(credit);
       clickCount = 0;
     } else {
@@ -111,7 +113,11 @@ $(()=>{
   }
 
 // function doubleIt(){
-//         $msgScreen.html(`Congratulations! You have won ${totalBet}GBP. Now, want to play double or nothing?`);
+// change class
+// get wager amount
+  $('#noDoub').on('submit', (e) => {
+
+  });
 //
 // }
 
