@@ -97,6 +97,7 @@ h1 {
 .msgScreen {
   display: flex;
   justify-content: center;
+  text-align: center;
   flex-wrap: wrap;
   font-size: 25px;
   border: 1px solid grey;
@@ -241,8 +242,9 @@ footer ul li a {
   }
 
   .details-wrapper {
-    display: flex;
     align-items: center;
+    display: flex;
+
   }
 
   .details-wrapper h1 {
@@ -256,6 +258,7 @@ footer ul li a {
   }
   .stats-wrapper {
     display: block;
+    display:
   }
 
 }
@@ -266,3 +269,25 @@ footer ul li a {
     width: 100px;
   }
 }
+
+/*  Div position = absolute, margin 100px auto 0 auto; z-index = 1000
+goawayname display = none
+.doubleOrnothing {
+position: absolute;
+margin: 100px auto 0 auto;
+border
+width
+height
+
+}
+.doubleOrnothing button {
+border
+background color
+color
+
+}
+.goaway {
+display: none;
+}
+pointer-events
+*/

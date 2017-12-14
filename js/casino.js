@@ -12,15 +12,16 @@ $(()=>{
   let wager = 5;  //initial value
   let winMult = 2; //initial value
   let totalBet = 0;
-  let totatWin = 0;
-  let totalLoss = 0;
+  // let totatWin = 0;
+  // let totalLoss = 0;
   let spinIndex = 0;
   let cardPicked = '';
-  let msg = 'Hi there, ready to play?';
+  // let msg = 'Hi there, ready to play?';
   let clickCount = 0;
   let gameRunning = false;
+  // let message = '';
 
-  // set of images
+  // set of images - increase the number of array values to increase difficulty
   const cardArray = [
     'img1.png',
     // 'img2.png',
@@ -41,8 +42,9 @@ $(()=>{
   // };
 
   $balance.html(credit);
-  // get wager amount
+  $msgScreen.html('Hi there, ready to play?');
 
+  // get wager amount
   $select.on('change', (e) => {
     wager = parseInt($(e.target).val());
   });
@@ -54,14 +56,15 @@ $(()=>{
 
   // bet and play
   $form.on('submit', () => {
+    console.log(wager, winMult, totalBet);
     $images.attr('src', 'images/img9.png');
     $msgScreen.html('Lets play!');
     event.preventDefault();
     totalBet = wager * winMult;
-    console.log(wager, winMult, totalBet, totalBet < credit);
+    // console.log(wager, winMult, totalBet, totalBet < credit);
     if (totalBet > credit){
-      msg = 'You have insufficient credit for this bet. Please change your selection or add additional credits';
-      $msgScreen.html(msg);
+      // msg = 'You have insufficient credit for this bet. Please change your selection or add additional credits';
+      $msgScreen.html('Insufficient credit for this bet. Please change your selection or add credits');
       return; // exit
     } else {
       gameRunning = true;
@@ -78,37 +81,45 @@ $(()=>{
       // fade away clicked grey image
       //add image to pickArray
       pickArray.push(spinIndex);
-      console.log($(e.target));
+      // console.log($(e.target));
       cardPicked = cardArray[spinIndex];
       const $clickedImage = $(e.target);
       $clickedImage.attr('src', `images/${cardPicked}`);
       // $image.css('background-image', `images/${cardPicked}`);
-
       if (clickCount === 3){
         gameRunning = false;
         checkSelect();
-        //
       }
     }
   });
 
   function checkSelect(){
     if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
-      totalWin = totalBet;    //* cardValue(...need to identify);
-      msg = `Congratulations! You have won ${totalWin}`; // check {}format
-      $msgScreen.html(msg);
-      credit = credit + totalWin;
+      // totalWin = totalBet;    //* cardValue(...need to identify);
+      // msg = `Congratulations! You have won ${totalWin}`; // check {}format
+      $msgScreen.html(`Congratulations! You have won ${totalBet}GBP`);
+      credit = credit + totalBet;
       $balance.html(credit);
       clickCount = 0;
     } else {
-      const totalLoss = totalBet;
-      msg = 'Sorry! Maybe next time';
-      $msgScreen.html(msg);
-      credit = credit - totalLoss;
+      // const totalLoss = totalBet;
+      $msgScreen.html('Sorry! Maybe next time. Have another go!');
+      credit = credit - totalBet;
       $balance.html(credit);
       clickCount = 0;
     }
   }
 
+// function doubleIt(){
+//         $msgScreen.html(`Congratulations! You have won ${totalBet}GBP. Now, want to play double or nothing?`);
+//
+// }
+
+
+  // function reset(){
+  //   $msgScreen.html(msg);
+  //   $balance.html(credit);
+  //   clickCount = 0;
+  // }
 
 });
