@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
   <link rel="stylesheet" href="css/reset.css">
+      <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/casino.js"type="text/javascript"></script>
 </head>
@@ -22,19 +23,19 @@
   <div class="page-wrapper">
 
     <main>
-      <h1>Fruity Reel</h1>
+      <h1>Fruity Scratch-Card</h1>
 
       <div class="grid-wrapper">
         <ul>
-          <li><img src="images/img9.png" class="image" alt="Image1"></li>
-          <li><img src="images/img9.png" class="image" alt="Image2"></li>
-          <li><img src="images/img9.png" class="image" alt="Image3"></li>
-          <li><img src="images/img9.png" class="image" alt="Image4"></li>
-          <li><img src="images/img9.png" class="image" alt="Image5"></li>
-          <li><img src="images/img9.png" class="image" alt="Image6"></li>
-          <li><img src="images/img9.png" class="image" alt="Image7"></li>
-          <li><img src="images/img9.png" class="image" alt="Image8"></li>
-          <li><img src="images/img9.png" class="image" alt="Image9"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image1"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image2"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image3"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image4"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image5"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image6"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image7"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image8"></li>
+          <li><img src="images/img9.png" class="image animated infinite" alt="Image9"></li>
         </ul>
       </div>
 
@@ -43,25 +44,24 @@
         <p>Lets have some fun!</p>
       </div>
 
-      <div class="dashboard">
-        <form>
-          <div class="">
-            <label for="availCredit">Credit:</label>
-            <p><span id="balance"></span> GBP</p>
+      <div class="">
+        <form class="dashboard">
+          <div class="availCredit">
+            <label for="availCredit">Credit: <span id="balance"></span> GBP</label>
           </div>
 
-          <div class="">
-            <label for="betAmount (GBP)">Bet Amount</label>
+          <div class="betAmount">
+            <label for="betAmount (GBP)">Bet Amount: </label>
             <select class="wager" name="wager">
-              <option value="1">1GBP</option>
-              <option value="2">2GBP</option>
-              <option selected value="5">5GBP</option>
-              <option value="10">10GBP</option>
+              <option value="1">1 GBP</option>
+              <option value="2">2 GBP</option>
+              <option selected value="5">5 GBP</option>
+              <option value="10">10 GBP</option>
             </select>
           </div>
 
-          <div class="">
-            <label for="betMult">Bet Multiple</label>
+          <div class="betMult">
+            <label for="betMult">Bet Multiple: </label>
             <select class="winMult" name= "winMultiple">
               <option value="1">x1</option>
               <option selected value="2">x2</option>
@@ -69,15 +69,15 @@
             </select>
           </div>
 
-          <div class="">
-            <button class="bet">Go!</button>
+          <div class="bet">
+            <button class="submit">Go!</button>
           </div>
 
-          <div class="doubleOrnothing goaway">
+          <!-- <div class="doubleOrnothing goaway">
             <p class="doubleMsg">Congratulations! You have won <span id="win"></span>GBP. Now, want to play double or nothing?</p>
             <button id="noDoub">No, I am a Chicken!</button>
             <button id="yesDoub">You Bet!</button>
-          </div>
+          </div> -->
         </form>
 
       </div>
@@ -86,12 +86,11 @@
 
     <footer>
       <ul>
-        <li><a href="#">About me</a></li>
+        <li><a href="http://www.giantsios.com/">About me</a></li>
         <li><a href="#">Privacy</a></li>
         <li><a href="#">Terms</a></li>
-        <li>&copy; 2017 Konstantinos Giantsios</li>
+        <li><a href="#">&copy; 2017 Konstantinos Giantsios</a></li>
       </ul>
-
     </footer>
   </div>
 </body>

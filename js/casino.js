@@ -13,26 +13,24 @@ $(()=>{
   let winMult = 2; //initial value
   let totalBet = 0;
   let totatWin = 0;
-  // let totalLoss = 0;
   let spinIndex = 0;
   let cardPicked = '';
-  // let msg = 'Hi there, ready to play?';
   let clickCount = 0;
   let gameRunning = false;
-  // let message = '';
   let dOnStatus = false;
+  let doubleBet = 0;
 
   // set of images - increase the number of array values to increase difficulty
   const cardArray = [
     'img1.png',
-    // 'img2.png',
+    'img2.png',
     // 'img3.png',
     // 'img4.png',
     // 'img5.png',
     // 'img6.png',
     'img7.png'
   ];
-  // this is the value of each card, say Aces give you a bigger win multiple than 3s
+  // this is the value of each card, say Sevens give you a bigger win multiple than Oranges
   const cardValue = [
     // 1,
     // 2,
@@ -57,14 +55,11 @@ $(()=>{
 
   // bet and play
   $form.on('submit', () => {
-    console.log(wager, winMult, totalBet);
     $images.attr('src', 'images/img9.png');
     $msgScreen.html('Lets play!');
     event.preventDefault();
     totalBet = wager * winMult;
-    // console.log(wager, winMult, totalBet, totalBet < credit);
     if (totalBet > credit){
-      // msg = 'You have insufficient credit for this bet. Please change your selection or add additional credits';
       $msgScreen.html('Insufficient credit for this bet. Please change your selection or add credits');
       return; // exit
     } else {
@@ -82,12 +77,9 @@ $(()=>{
       // fade away clicked grey image
       //add image to pickArray
       pickArray.push(spinIndex);
-      // console.log($(e.target));
       cardPicked = cardArray[spinIndex];
-      console.log(cardValue[spinIndex]);
       const $clickedImage = $(e.target);
       $clickedImage.attr('src', `images/${cardPicked}`);
-      // $image.css('background-image', `images/${cardPicked}`);
       if (clickCount === 3){
         gameRunning = false;
         checkSelect();
@@ -97,9 +89,8 @@ $(()=>{
 
   function checkSelect(){
     if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
-      totalWin = totalBet * cardValue[spinIndex];    //* cardValue(...need to identify);
-      // msg = `Congratulations! You have won ${totalWin}`; // check {}format
-      $msgScreen.html(`Congratulations! You have won ${totalWin}GBP`);
+      totalWin = totalBet * cardValue[spinIndex];
+      $msgScreen.html(`Congratulations, you have won ${totalWin}GBP!`);
       credit = credit + totalWin;
       $balance.html(credit);
       clickCount = 0;
@@ -112,16 +103,34 @@ $(()=>{
     }
   }
 
-// function doubleIt(){
-// change class
-// get wager amount
-  $('#noDoub').on('submit', (e) => {
+  // THE FOLOWING SECTION RELATES TO THE NEXT GAME LEVEL OFFERING A WINNER THE OPTION
+  // TO DOUBLE DOWN ON ITS WIN
+  // function doubleIt(){
+  // // change class
+  // // get wager amount
+  //
+  // if (noDoub === true){
+  //   credit = credit + totalWin;
+  //   $balance.html(credit);
+  //   clickCount = 0;
+  // }
+  // if (yesDoub === true) {
+  //     doubleBet = totalWin;
+  //     play(); // need to adapt the form function and find a way to adjust
+  // the bet amount by shifting some commands to an external function
+  // }
+  //
+  // $('#noDoub').on('submit', (e) => {});
+  //
+  // $('doubleOrnothing goaway').removeClass('goaway');
+  // });
+  // $('#yesDoub').on('submit', (e) => {
+  //
+  // });
 
-  });
-//
-// }
-
-
+  // // }
+  //
+  //
   // function reset(){
   //   $msgScreen.html(msg);
   //   $balance.html(credit);
