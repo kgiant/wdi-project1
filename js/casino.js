@@ -5,25 +5,25 @@ $(()=>{
   const $msgScreen = $('.msgScreen');
   const $select = $('select.wager');
   const $selectWM = $('select.winMult');
-  const $button = $('.bet');
+  const $noDoub = $('#noDoub');  //for second level
+  const $yesDoub = $('#yesDoub');  //for second level
   let pickArray = [];
   const $form = $('form');
   let credit = 1000;
-  let wager = 5;  //initial value
-  let winMult = 2; //initial value
+  let wager = 5;
+  let winMult = 2;
   let totalBet = 0;
-  let totatWin = 0;
+  let totalWin = 0;
   let spinIndex = 0;
   let cardPicked = '';
   let clickCount = 0;
   let gameRunning = false;
-  let dOnStatus = false;
-  let doubleBet = 0;
+  let dOnStatus = false; //for second level
 
   // set of images - increase the number of array values to increase difficulty
   const cardArray = [
     'img1.png',
-    'img2.png',
+    // 'img2.png',
     // 'img3.png',
     // 'img4.png',
     // 'img5.png',
@@ -53,88 +53,78 @@ $(()=>{
     winMult = parseInt($(e.target).val());
   });
 
+  $noDoub.on('click', () => {
+    credit = credit + totalWin;
+    $balance.html(credit);
+    clickCount = 0;
+    gameRunning = false;
+  });
+
+  $yesDoub.on('click', () => {
+    credit = credit + totalWin;
+    totalBet = totalWin;
+    dOnStatus = true;
+    play();
+    dOnStatus = false;
+  });
+
   // bet and play
   $form.on('submit', () => {
+    totalBet = wager * winMult;
+    play();
+  });
+
+  // play function was taken out of the form so that it can be used in second level
+  function play(){
+    clickCount = 0;
     $images.attr('src', 'images/img9.png');
     $msgScreen.html('Lets play!');
     event.preventDefault();
-    totalBet = wager * winMult;
     if (totalBet > credit){
       $msgScreen.html('Insufficient credit for this bet. Please change your selection or add credits');
       return; // exit
     } else {
       gameRunning = true;
-      $images.css('background-image', 'images/img9.png');    // add a standard image over all boxes
+      $images.css('background-image', 'images/img9.png');    // adds a standard image "Q" over all boxes
       pickArray = [];
     }
-  });
+  }
 
+// selecting squares from the grid
   $images.on('click', (e) => {
     console.log('clicked image');
     if (gameRunning === true){
       clickCount +=1;
       spinIndex = Math.floor(Math.random()*(cardArray.length));
-      // fade away clicked grey image
-      //add image to pickArray
       pickArray.push(spinIndex);
       cardPicked = cardArray[spinIndex];
       const $clickedImage = $(e.target);
       $clickedImage.attr('src', `images/${cardPicked}`);
+      $clickedImage.toggleClass('rubberBand');
       if (clickCount === 3){
         gameRunning = false;
-        checkSelect();
+        checkResults();
       }
     }
   });
 
-  function checkSelect(){
+// check if the three picks are of the same type
+  function checkResults(){
     if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
-      totalWin = totalBet * cardValue[spinIndex];
+      // totalWin = totalBet * cardValue[spinIndex];
+      const temp = false; // remove when the popup is added
+      const roundWin = totalBet * cardValue[spinIndex];
+      totalWin = temp === true? roundWin * 2: roundWin; //replace temp with dOnStatus
       $msgScreen.html(`Congratulations, you have won ${totalWin}GBP!`);
       credit = credit + totalWin;
       $balance.html(credit);
       clickCount = 0;
     } else {
-      // const totalLoss = totalBet;
       $msgScreen.html('Sorry! Maybe next time. Have another go!');
       credit = credit - totalBet;
       $balance.html(credit);
       clickCount = 0;
     }
   }
-
-  // THE FOLOWING SECTION RELATES TO THE NEXT GAME LEVEL OFFERING A WINNER THE OPTION
-  // TO DOUBLE DOWN ON ITS WIN
-  // function doubleIt(){
-  // // change class
-  // // get wager amount
-  //
-  // if (noDoub === true){
-  //   credit = credit + totalWin;
-  //   $balance.html(credit);
-  //   clickCount = 0;
-  // }
-  // if (yesDoub === true) {
-  //     doubleBet = totalWin;
-  //     play(); // need to adapt the form function and find a way to adjust
-  // the bet amount by shifting some commands to an external function
-  // }
-  //
-  // $('#noDoub').on('submit', (e) => {});
-  //
-  // $('doubleOrnothing goaway').removeClass('goaway');
-  // });
-  // $('#yesDoub').on('submit', (e) => {
-  //
-  // });
-
-  // // }
-  //
-  //
-  // function reset(){
-  //   $msgScreen.html(msg);
-  //   $balance.html(credit);
-  //   clickCount = 0;
-  // }
 
 });
