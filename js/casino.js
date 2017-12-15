@@ -5,8 +5,6 @@ $(()=>{
   const $msgScreen = $('.msgScreen');
   const $select = $('select.wager');
   const $selectWM = $('select.winMult');
-  const $noDoub = $('#noDoub');  //for second level
-  const $yesDoub = $('#yesDoub');  //for second level
   let pickArray = [];
   const $form = $('form');
   let credit = 1000;
@@ -18,7 +16,8 @@ $(()=>{
   let cardPicked = '';
   let clickCount = 0;
   let gameRunning = false;
-  let dOnStatus = false; //for second level
+
+  let gameCount = 0;
 
   // set of images - increase the number of array values to increase difficulty
   const cardArray = [
@@ -43,39 +42,21 @@ $(()=>{
   $balance.html(credit);
   $msgScreen.html('Hi there, ready to play?');
 
-  // get wager amount
-  $select.on('change', (e) => {
+  $select.on('change', (e) => {  // get wager amount
     wager = parseInt($(e.target).val());
   });
 
-  // get wager multiple
-  $selectWM.on('change', (e) => {
+  $selectWM.on('change', (e) => {  // get wager multiple
     winMult = parseInt($(e.target).val());
   });
 
-  $noDoub.on('click', () => {
-    credit = credit + totalWin;
-    $balance.html(credit);
-    clickCount = 0;
-    gameRunning = false;
-  });
-
-  $yesDoub.on('click', () => {
-    credit = credit + totalWin;
-    totalBet = totalWin;
-    dOnStatus = true;
-    play();
-    dOnStatus = false;
-  });
-
-  // bet and play
-  $form.on('submit', () => {
+  $form.on('submit', () => {    // bet and play
     totalBet = wager * winMult;
+    console.log(totalBet);
     play();
   });
 
-  // play function was taken out of the form so that it can be used in second level
-  function play(){
+  function play(){   // play function was taken out of the form so that it can be used in second level
     clickCount = 0;
     $images.attr('src', 'images/img9.png');
     $msgScreen.html('Lets play!');
@@ -90,8 +71,7 @@ $(()=>{
     }
   }
 
-// selecting squares from the grid
-  $images.on('click', (e) => {
+  $images.on('click', (e) => {    // selecting squares from the grid
     console.log('clicked image');
     if (gameRunning === true){
       clickCount +=1;
@@ -103,28 +83,44 @@ $(()=>{
       $clickedImage.toggleClass('rubberBand');
       if (clickCount === 3){
         gameRunning = false;
+        gameCount +=1;
         checkResults();
       }
     }
-  });
+  });  //need to add a controler that prevents clicking on the same element more than one time
 
-// check if the three picks are of the same type
+  // checks if the three picks are of the same type
   function checkResults(){
     if (pickArray[0] === pickArray[1] && pickArray[1] === pickArray [2]){
-      // totalWin = totalBet * cardValue[spinIndex];
-      const temp = false; // remove when the popup is added
-      const roundWin = totalBet * cardValue[spinIndex];
-      totalWin = temp === true? roundWin * 2: roundWin; //replace temp with dOnStatus
-      $msgScreen.html(`Congratulations, you have won ${totalWin}GBP!`);
-      credit = credit + totalWin;
-      $balance.html(credit);
-      clickCount = 0;
-    } else {
+      if (gameCount > 1){  //checks if this is the second level, if yes credits account and resets
+        totalWin = totalBet * cardValue[spinIndex] * 2;
+        resetWin();
+        // dOnStatus = false;
+      } else {    // since first round win, asks for double down and either starts another round or credits account and resets
+        const temp = confirm('Congratulations, You have won! Are you up to a challenge? Pick another winning set and we will double your winnings!');
+        if (temp === true){
+          credit = credit + totalWin;
+          totalBet = totalWin;
+          $balance.html(credit);
+          play();
+        } else {
+          resetWin();
+        }
+      }
+    } else {    // when loosing debits account and resets
       $msgScreen.html('Sorry! Maybe next time. Have another go!');
       credit = credit - totalBet;
       $balance.html(credit);
       clickCount = 0;
+      gameCount = 0;
     }
   }
 
+  function resetWin(){
+    $msgScreen.html(`Congratulations, you have won ${totalWin}GBP!`);
+    credit = credit + totalWin;
+    $balance.html(credit);
+    clickCount = 0;
+    gameCount = 0;
+  }
 });

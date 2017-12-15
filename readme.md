@@ -2,8 +2,11 @@
 ### Web Development Immersive #31, General Assembly, London UK
 
 ##About
+
 This project is the first completed in the context of my participation in the WDI GA course in London. My initial choise of game was actually a business quiz that aimed to utilize Google Charts and SurveyJS to test player knowledge on a variety of economic and business topics. For someone that started to learn coding just 3 weeks ago that proved to be an over-ambitious pursuit, and 2 days before the project deadline was dropped and this scratch game was developed in less than half the initially allocated time.
+
 ##Description
+
 Fruity Scratch-Card is a betting scratch game  developed using HTML/CSS, JQuery and Javascript. This time I chose to focus primarily on the game logic and functionality, and less on the visual excellence, given the time pressure. You can play the game [here](https://kg-firstapp.herokuapp.com/). 
 ![](images/Screen Shot 2017-12-15 at 1.11.16 AM.png)
 
